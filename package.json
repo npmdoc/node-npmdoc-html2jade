@@ -1,17 +1,40 @@
 {
-    "buildNpmdoc":"html2jade",
+    "author": "kai zhu <kaizhu256@gmail.com>",
+    "buildNpmdoc": "html2jade",
+    "description": "api documentation for [html2jade (v0.8.6)](https://github.com/donpark/html2jade#readme) [![npm package](https://img.shields.io/npm/v/npmdoc-html2jade.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-html2jade) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-html2jade.svg)](https://travis-ci.org/npmdoc/node-npmdoc-html2jade)",
     "devDependencies": {
-        "html2jade": "*",
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
+        "html2jade": "*",
         "utility2": "kaizhu256/node-utility2#alpha"
     },
-    "name":"npmdoc-html2jade",
+    "engines": {
+        "node": ">=4.0"
+    },
+    "homepage": "https://github.com/npmdoc/node-npmdoc-html2jade",
+    "keywords": [
+        "documentation",
+        "html2jade"
+    ],
+    "license": "MIT",
+    "main": "lib.npmdoc_html2jade.js",
+    "name": "npmdoc-html2jade",
+    "nameAlias": "npmdoc_html2jade",
+    "nameOriginal": "npmdoc-html2jade",
+    "os": [
+        "darwin",
+        "linux"
+    ],
     "repository": {
         "type": "git",
         "url": "https://github.com/npmdoc/node-npmdoc-html2jade"
     },
     "scripts": {
-        "build-ci": "utility2 shReadmeTest build_ci.sh"
+        "build-ci": "utility2 shReadmeTest build_ci.sh",
+        "env": "env",
+        "heroku-postbuild": "(set -e; npm install \"kaizhu256/node-utility2#alpha\"; utility2 shDeployHeroku)",
+        "postinstall": "if [ -f npm_scripts.sh ]; then ./npm_scripts.sh postinstall; fi",
+        "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
+        "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
     "version": "0.0.1"
 }
