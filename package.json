@@ -1,7 +1,7 @@
 {
     "author": "kai zhu <kaizhu256@gmail.com>",
     "buildNpmdoc": "html2jade",
-    "description": "api documentation for [html2jade (v0.8.6)](https://github.com/donpark/html2jade#readme) [![npm package](https://img.shields.io/npm/v/npmdoc-html2jade.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-html2jade) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-html2jade.svg)](https://travis-ci.org/npmdoc/node-npmdoc-html2jade)",
+    "description": "#### api documentation for  [html2jade (v0.8.6)](https://github.com/donpark/html2jade#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-html2jade.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-html2jade) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-html2jade.svg)](https://travis-ci.org/npmdoc/node-npmdoc-html2jade)",
     "devDependencies": {
         "electron-lite": "kaizhu256/node-electron-lite#alpha",
         "html2jade": "*",
@@ -36,5 +36,5 @@
         "start": "(set -e; export PORT=${PORT:-8080}; utility2 start test.js)",
         "test": "(set -e; export PORT=$(utility2 shServerPortRandom); utility2 test test.js)"
     },
-    "version": "0.0.1"
+    "version": "0.0.2"
 }
