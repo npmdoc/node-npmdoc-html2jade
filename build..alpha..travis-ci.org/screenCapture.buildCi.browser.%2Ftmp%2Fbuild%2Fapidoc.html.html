@@ -137,6 +137,12 @@
 
         <li>
 
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan"></span>html2jade</span>
+
+        </li>
+
+        <li>
+
             <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">html2jade.</span>Converter.prototype</span>
 
         </li>
@@ -548,6 +554,91 @@
 
     </ol></li>
 
+    <li class="apidocModuleLi"><a href="#apidoc.module.html2jade.html2jade">module html2jade.html2jade</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.html2jade.html2jade.Converter">
+            function <span class="apidocSignatureSpan">html2jade.html2jade.</span>Converter
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.html2jade.html2jade.Output">
+            function <span class="apidocSignatureSpan">html2jade.html2jade.</span>Output
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.html2jade.html2jade.Parser">
+            function <span class="apidocSignatureSpan">html2jade.html2jade.</span>Parser
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.html2jade.html2jade.StreamOutput">
+            function <span class="apidocSignatureSpan">html2jade.html2jade.</span>StreamOutput
+            <span class="apidocSignatureSpan">(stream)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.html2jade.html2jade.StringOutput">
+            function <span class="apidocSignatureSpan">html2jade.html2jade.</span>StringOutput
+            <span class="apidocSignatureSpan">()</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.html2jade.html2jade.Writer">
+            function <span class="apidocSignatureSpan">html2jade.html2jade.</span>Writer
+            <span class="apidocSignatureSpan">(options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.html2jade.html2jade.convert">
+            function <span class="apidocSignatureSpan">html2jade.html2jade.</span>convert
+            <span class="apidocSignatureSpan">(input, output, options)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.html2jade.html2jade.convertDocument">
+            function <span class="apidocSignatureSpan">html2jade.html2jade.</span>convertDocument
+            <span class="apidocSignatureSpan">(document, options, cb)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.html2jade.html2jade.convertHtml">
+            function <span class="apidocSignatureSpan">html2jade.html2jade.</span>convertHtml
+            <span class="apidocSignatureSpan">(html, options, cb)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
 </ol></div>
 
 <div class="apidocSectionDiv">
@@ -806,6 +897,8 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
 
 
 
+
+
 </div>
 
 <div class="apidocSectionDiv">
@@ -876,7 +969,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return output.leave();
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+      docTypeName = 'html';
+    }
+    if (docTypeName != null) {
+      output.writeln('doctype ' + docTypeName);
+    }
+  }
+  if (document.documentElement) {
+    return this.<span class="apidocCodeKeywordSpan">children</span>(document, output, false);
+  } else {
+    htmlEls = document.getElementsByTagName('html');
+    if (htmlEls.length &gt; 0) {
+      return this.element(htmlEls[0], output);
+    }
+  }
+};
+...</pre></li>
     </ul>
 
 
@@ -913,7 +1022,22 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return this.conditional(node, condition[1], output);
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+        return _this.text(child, output, doNotEncode ? {
+          encodeEntityRef: false
+        } : {
+          encodeEntityRef: true
+        });
+      }
+    } else if (nodeType === 8) {
+      return _this.<span class="apidocCodeKeywordSpan">comment</span>(child, output);
+    }
+  });
+  if (indent) {
+    return output.leave();
+  }
+};
+...</pre></li>
     </ul>
 
 
@@ -939,7 +1063,24 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
   }
   return node.parentNode.insertBefore(conditionalElem, node.nextSibling);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+          trim: true,
+          wrap: false
+        });
+      });
+      return output.leave();
+    }
+  } else {
+    return this.<span class="apidocCodeKeywordSpan">conditional</span>(node, condition[1], output);
+  }
+};
+
+Converter.prototype.conditional = function(node, condition, output) {
+  var conditionalElem, innerHTML;
+  innerHTML = node.textContent.trim().replace(/\s*\[if\s+[^\]]+\]&gt;\s*/, '').replace('&lt;![endif]', &amp;#
+x27;');
+  if (innerHTML.indexOf("&lt;!") === 0) {
+...</pre></li>
     </ul>
 
 
@@ -978,7 +1119,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     }
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+      } else {
+        if (output == null) {
+          output = new StreamOutput(process.stdout);
+        }
+        if (options.converter == null) {
+          options.converter = new Converter(options);
+        }
+        return options.converter.<span class="apidocCodeKeywordSpan">document</span>(window.document, output);
+      }
+    });
+  };
+}
+
+scope.convertHtml = function(html, options, cb) {
+  if (options == null) {
+...</pre></li>
     </ul>
 
 
@@ -1052,7 +1209,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return this.children(node, output);
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    }
+  }
+  if (document.documentElement) {
+    return this.children(document, output, false);
+  } else {
+    htmlEls = document.getElementsByTagName('html');
+    if (htmlEls.length &gt; 0) {
+      return this.<span class="apidocCodeKeywordSpan">element</span>(htmlEls[0], output);
+    }
+  }
+};
+
+Converter.prototype.element = function(node, output) {
+  var firstline, tagAttr, tagHead, tagName, tagText,
+    _this = this;
+...</pre></li>
     </ul>
 
 
@@ -1081,7 +1254,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     });
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  if (node.hasAttribute('src')) {
+    output.writeln(tagHead + tagAttr);
+    return this.writer.writeTextContent(node, output, {
+      pipe: false,
+      wrap: false
+    });
+  } else if (tagName === 'script') {
+    return this.<span class="apidocCodeKeywordSpan">script</span>(node, output, tagHead, tagAttr);
+  } else if (tagName === 'style') {
+    return this.style(node, output, tagHead, tagAttr);
+  }
+} else if (tagName === 'conditional') {
+  output.writeln('//' + node.getAttribute('condition'));
+  return this.children(node, output);
+} else if (['pre'].indexOf(tagName) !== -1) {
+...</pre></li>
     </ul>
 
 
@@ -1109,7 +1298,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     });
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    return this.writer.writeTextContent(node, output, {
+      pipe: false,
+      wrap: false
+    });
+  } else if (tagName === 'script') {
+    return this.script(node, output, tagHead, tagAttr);
+  } else if (tagName === 'style') {
+    return this.<span class="apidocCodeKeywordSpan">style</span>(node, output, tagHead, tagAttr);
+  }
+} else if (tagName === 'conditional') {
+  output.writeln('//' + node.getAttribute('condition'));
+  return this.children(node, output);
+} else if (['pre'].indexOf(tagName) !== -1) {
+  output.writeln(tagHead + tagAttr + '.');
+  output.enter();
+...</pre></li>
     </ul>
 
 
@@ -1125,7 +1330,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
   node.normalize();
   return this.writer.writeText(node, output, options);
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+      this.writer.forEachChild(parent, function(child) {
+var nodeType;
+nodeType = child.nodeType;
+if (nodeType === 1) {
+  return _this.element(child, output);
+} else if (nodeType === 3) {
+  if (parent._nodeName === 'code') {
+    return _this.<span class="apidocCodeKeywordSpan">text</span>(child, output, {
+      encodeEntityRef: true,
+      pipe: true
+    });
+  } else {
+    return _this.text(child, output, doNotEncode ? {
+      encodeEntityRef: false
+    } : {
+...</pre></li>
     </ul>
 
 
@@ -1174,7 +1395,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return _results;
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    }
+    return _results;
+  }
+};
+
+Writer.prototype.writeTextContent = function(node, output, options) {
+  var _this = this;
+  output.<span class="apidocCodeKeywordSpan">enter</span>();
+  this.forEachChild(node, function(child) {
+    return _this.writeText(child, output, options);
+  });
+  return output.leave();
+};
+
+Writer.prototype.writeText = function(node, output, options) {
+...</pre></li>
     </ul>
 
 
@@ -1193,7 +1430,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return this.indents = this.indents.substring(nspaces);
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+Writer.prototype.writeTextContent = function(node, output, options) {
+  var _this = this;
+  output.enter();
+  this.forEachChild(node, function(child) {
+    return _this.writeText(child, output, options);
+  });
+  return output.<span class="apidocCodeKeywordSpan">leave</span>();
+};
+
+Writer.prototype.writeText = function(node, output, options) {
+  var data, lines,
+    _this = this;
+  if (node.nodeType === 3) {
+    data = node.data || '';
+...</pre></li>
     </ul>
 
 
@@ -1210,7 +1463,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     indent = true;
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+            data = data.replace(/\r\n|\r|\n/, '');
+          }
+          data = '\\n' + data;
+          firstline = false;
+        }
+        data = data.replace(/\t/g, '\\t');
+        data = data.replace(/\r\n|\r|\n/g, '\n' + output.indents);
+        return output.<span class="apidocCodeKeywordSpan">write</span>(data);
+      }
+    }
+  });
+  output.writeln();
+  return output.leave();
+} else if (this.options.bodyless &amp;&amp; (tagName === 'html' || tagName === 'body')) {
+  return this.children(node, output, false);
+...</pre></li>
     </ul>
 
 
@@ -1227,7 +1496,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     indent = true;
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+if (encodeEntityRef) {
+  line = Ent.encode(line, entOptions);
+}
+if (escapeBackslash) {
+  line = line.replace("\\", "\\\\");
+}
+if (!wrap || line.length &lt;= this.wrapLength) {
+  return output.<span class="apidocCodeKeywordSpan">writeln</span>(prefix + line);
+} else {
+  lines = this.breakLine(line);
+  if (lines.length === 1) {
+    return output.writeln(prefix + line);
+  } else {
+    return lines.forEach(function(line) {
+      return _this.writeTextLine(node, line, output, options);
+...</pre></li>
     </ul>
 
 
@@ -1285,7 +1570,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     }
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+if (options == null) {
+  options = {};
+}
+applyOptions(options);
+if (options.parser == null) {
+  options.parser = new Parser(options);
+}
+return options.parser.<span class="apidocCodeKeywordSpan">parse</span>(input, function(errors, window) {
+  if (errors != null ? errors.length : void 0) {
+    return errors;
+  } else {
+    if (output == null) {
+      output = new StreamOutput(process.stdout);
+    }
+    if (options.converter == null) {
+...</pre></li>
     </ul>
 
 
@@ -1354,7 +1655,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return this.stream.write(data);
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+            data = data.replace(/\r\n|\r|\n/, '');
+          }
+          data = '\\n' + data;
+          firstline = false;
+        }
+        data = data.replace(/\t/g, '\\t');
+        data = data.replace(/\r\n|\r|\n/g, '\n' + output.indents);
+        return output.<span class="apidocCodeKeywordSpan">write</span>(data);
+      }
+    }
+  });
+  output.writeln();
+  return output.leave();
+} else if (this.options.bodyless &amp;&amp; (tagName === 'html' || tagName === 'body')) {
+  return this.children(node, output, false);
+...</pre></li>
     </ul>
 
 
@@ -1379,7 +1696,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return this.stream.write(data + '\n');
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+if (encodeEntityRef) {
+  line = Ent.encode(line, entOptions);
+}
+if (escapeBackslash) {
+  line = line.replace("\\", "\\\\");
+}
+if (!wrap || line.length &lt;= this.wrapLength) {
+  return output.<span class="apidocCodeKeywordSpan">writeln</span>(prefix + line);
+} else {
+  lines = this.breakLine(line);
+  if (lines.length === 1) {
+    return output.writeln(prefix + line);
+  } else {
+    return lines.forEach(function(line) {
+      return _this.writeTextLine(node, line, output, options);
+...</pre></li>
     </ul>
 
 
@@ -1441,7 +1774,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
   this.fragments = [];
   return result;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    } else {
+      output = (_ref = options.output) != null ? _ref : new StringOutput();
+      if (options.converter == null) {
+        options.converter = new Converter(options);
+      }
+      options.converter.document(window.document, output);
+      if (cb != null) {
+        return cb(null, output.<span class="apidocCodeKeywordSpan">final</span>());
+      }
+    }
+  });
+};
+
+scope.convertDocument = function(document, options, cb) {
+  var output, _ref;
+...</pre></li>
     </ul>
 
 
@@ -1466,7 +1815,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return this.fragments.push(data);
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+            data = data.replace(/\r\n|\r|\n/, '');
+          }
+          data = '\\n' + data;
+          firstline = false;
+        }
+        data = data.replace(/\t/g, '\\t');
+        data = data.replace(/\r\n|\r|\n/g, '\n' + output.indents);
+        return output.<span class="apidocCodeKeywordSpan">write</span>(data);
+      }
+    }
+  });
+  output.writeln();
+  return output.leave();
+} else if (this.options.bodyless &amp;&amp; (tagName === 'html' || tagName === 'body')) {
+  return this.children(node, output, false);
+...</pre></li>
     </ul>
 
 
@@ -1491,7 +1856,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return this.fragments.push(data + '\n');
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+if (encodeEntityRef) {
+  line = Ent.encode(line, entOptions);
+}
+if (escapeBackslash) {
+  line = line.replace("\\", "\\\\");
+}
+if (!wrap || line.length &lt;= this.wrapLength) {
+  return output.<span class="apidocCodeKeywordSpan">writeln</span>(prefix + line);
+} else {
+  lines = this.breakLine(line);
+  if (lines.length === 1) {
+    return output.writeln(prefix + line);
+  } else {
+    return lines.forEach(function(line) {
+      return _this.writeTextLine(node, line, output, options);
+...</pre></li>
     </ul>
 
 
@@ -1570,7 +1951,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
   }
   return lines;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+}
+if (escapeBackslash) {
+  line = line.replace("\\", "\\\\");
+}
+if (!wrap || line.length &lt;= this.wrapLength) {
+  return output.writeln(prefix + line);
+} else {
+  lines = this.<span class="apidocCodeKeywordSpan">breakLine</span>(line);
+  if (lines.length === 1) {
+    return output.writeln(prefix + line);
+  } else {
+    return lines.forEach(function(line) {
+      return _this.writeTextLine(node, line, output, options);
+    });
+  }
+...</pre></li>
     </ul>
 
 
@@ -1592,7 +1989,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return attrName + "=" + this.attrQuote + attrValue + this.attrQuote;
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    if (attrName === 'id' &amp;&amp; isValidJadeId(attrValue)) {
+
+    } else if (attrName === 'class') {
+      invalidClassNames = node.getAttribute('class').split(/\s+/).filter(function(item) {
+        return item &amp;&amp; !isValidJadeClassName(item);
+      });
+      if (invalidClassNames.length &gt; 0) {
+        result.push(this.<span class="apidocCodeKeywordSpan">buildTagAttr</span>(attrName, invalidClassNames.join(' ')));
+      }
+    } else {
+      attrValue = attrValue.replace(/(\r|\n)\s*/g, "\\$1" + indents);
+      result.push(this.buildTagAttr(attrName, attrValue));
+    }
+  }
+}
+...</pre></li>
     </ul>
 
 
@@ -1616,7 +2029,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     return _results;
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    return _results;
+  }
+};
+
+Writer.prototype.writeTextContent = function(node, output, options) {
+  var _this = this;
+  output.enter();
+  this.<span class="apidocCodeKeywordSpan">forEachChild</span>(node, function(child) {
+    return _this.writeText(child, output, options);
+  });
+  return output.leave();
+};
+
+Writer.prototype.writeText = function(node, output, options) {
+  var data, lines,
+...</pre></li>
     </ul>
 
 
@@ -1665,7 +2094,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     }
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+var firstline, tagAttr, tagHead, tagName, tagText,
+  _this = this;
+if (!(node != null ? node.tagName : void 0)) {
+  return;
+}
+tagName = node.tagName.toLowerCase();
+tagHead = this.writer.tagHead(node);
+tagAttr = this.writer.<span class="apidocCodeKeywordSpan">tagAttr</span>(node, output.indents);
+tagText = this.writer.tagText(node);
+if (tagName === 'script' || tagName === 'style') {
+  if (node.hasAttribute('src')) {
+    output.writeln(tagHead + tagAttr);
+    return this.writer.writeTextContent(node, output, {
+      pipe: false,
+      wrap: false
+...</pre></li>
     </ul>
 
 
@@ -1694,7 +2139,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
   }
   return result;
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    Converter.prototype.element = function(node, output) {
+var firstline, tagAttr, tagHead, tagName, tagText,
+  _this = this;
+if (!(node != null ? node.tagName : void 0)) {
+  return;
+}
+tagName = node.tagName.toLowerCase();
+tagHead = this.writer.<span class="apidocCodeKeywordSpan">tagHead</span>(node);
+tagAttr = this.writer.tagAttr(node, output.indents);
+tagText = this.writer.tagText(node);
+if (tagName === 'script' || tagName === 'style') {
+  if (node.hasAttribute('src')) {
+    output.writeln(tagHead + tagAttr);
+    return this.writer.writeTextContent(node, output, {
+      pipe: false,
+...</pre></li>
     </ul>
 
 
@@ -1721,7 +2182,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     }
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  _this = this;
+if (!(node != null ? node.tagName : void 0)) {
+  return;
+}
+tagName = node.tagName.toLowerCase();
+tagHead = this.writer.tagHead(node);
+tagAttr = this.writer.tagAttr(node, output.indents);
+tagText = this.writer.<span class="apidocCodeKeywordSpan">tagText</span>(node);
+if (tagName === 'script' || tagName === 'style') {
+  if (node.hasAttribute('src')) {
+    output.writeln(tagHead + tagAttr);
+    return this.writer.writeTextContent(node, output, {
+      pipe: false,
+      wrap: false
+    });
+...</pre></li>
     </ul>
 
 
@@ -1746,7 +2223,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     }
   }
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  }
+};
+
+Writer.prototype.writeTextContent = function(node, output, options) {
+  var _this = this;
+  output.enter();
+  this.forEachChild(node, function(child) {
+    return _this.<span class="apidocCodeKeywordSpan">writeText</span>(child, output, options);
+  });
+  return output.leave();
+};
+
+Writer.prototype.writeText = function(node, output, options) {
+  var data, lines,
+    _this = this;
+...</pre></li>
     </ul>
 
 
@@ -1766,7 +2259,23 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
   });
   return output.leave();
 }</pre></li>
-    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+tagName = node.tagName.toLowerCase();
+tagHead = this.writer.tagHead(node);
+tagAttr = this.writer.tagAttr(node, output.indents);
+tagText = this.writer.tagText(node);
+if (tagName === 'script' || tagName === 'style') {
+  if (node.hasAttribute('src')) {
+    output.writeln(tagHead + tagAttr);
+    return this.writer.<span class="apidocCodeKeywordSpan">writeTextContent</span>(node, output, {
+      pipe: false,
+      wrap: false
+    });
+  } else if (tagName === 'script') {
+    return this.script(node, output, tagHead, tagAttr);
+  } else if (tagName === 'style') {
+    return this.style(node, output, tagHead, tagAttr);
+...</pre></li>
     </ul>
 
 
@@ -1820,7 +2329,269 @@ Html2Jade.convertDocument(document, {}, function (err, jade) {
     }
   }
 }</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+  var data, lines,
+    _this = this;
+  if (node.nodeType === 3) {
+    data = node.data || '';
+    if (data.length &gt; 0) {
+      lines = data.split(/\r|\n/);
+      return lines.forEach(function(line) {
+        return _this.<span class="apidocCodeKeywordSpan">writeTextLine</span>(node, line, output, options);
+      });
+    }
+  }
+};
+
+Writer.prototype.writeTextLine = function(node, line, output, options) {
+  var encodeEntityRef, escapeBackslash, lines, pipe, prefix, trim, wrap, _ref, _ref1, _ref2, _ref3, _ref4, _ref5, _ref6,
+...</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.html2jade.html2jade" id="apidoc.module.html2jade.html2jade">module html2jade.html2jade</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.html2jade.html2jade.Converter" id="apidoc.element.html2jade.html2jade.Converter">
+        function <span class="apidocSignatureSpan">html2jade.html2jade.</span>Converter
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function Converter(options) {
+  var _ref, _ref1;
+  this.options = options != null ? options : {};
+  this.scalate = (_ref = this.options.scalate) != null ? _ref : false;
+  this.writer = (_ref1 = this.options.writer) != null ? _ref1 : new Writer(this.options);
+}</pre></li>
     <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.html2jade.html2jade.Output" id="apidoc.element.html2jade.html2jade.Output">
+        function <span class="apidocSignatureSpan">html2jade.html2jade.</span>Output
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function Output() {
+  this.indents = '';
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.html2jade.html2jade.Parser" id="apidoc.element.html2jade.html2jade.Parser">
+        function <span class="apidocSignatureSpan">html2jade.html2jade.</span>Parser
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function Parser(options) {
+  this.options = options != null ? options : {};
+  if (isNode) {
+    this.jsdom = require('jsdom-little');
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.html2jade.html2jade.StreamOutput" id="apidoc.element.html2jade.html2jade.StreamOutput">
+        function <span class="apidocSignatureSpan">html2jade.html2jade.</span>StreamOutput
+        <span class="apidocSignatureSpan">(stream)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function StreamOutput(stream) {
+  this.stream = stream;
+  StreamOutput.__super__.constructor.apply(this, arguments);
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.html2jade.html2jade.StringOutput" id="apidoc.element.html2jade.html2jade.StringOutput">
+        function <span class="apidocSignatureSpan">html2jade.html2jade.</span>StringOutput
+        <span class="apidocSignatureSpan">()</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function StringOutput() {
+  StringOutput.__super__.constructor.apply(this, arguments);
+  this.fragments = [];
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.html2jade.html2jade.Writer" id="apidoc.element.html2jade.html2jade.Writer">
+        function <span class="apidocSignatureSpan">html2jade.html2jade.</span>Writer
+        <span class="apidocSignatureSpan">(options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">function Writer(options) {
+  var _ref, _ref1, _ref2;
+  if (options == null) {
+    options = {};
+  }
+  this.wrapLength = (_ref = options.wrapLength) != null ? _ref : 80;
+  this.scalate = (_ref1 = options.scalate) != null ? _ref1 : false;
+  this.attrSep = this.scalate || options.noattrcomma ? ' ' : ', ';
+  if (options.double) {
+    this.attrQuote = '"';
+    this.nonAttrQuote = "'";
+  } else {
+    this.attrQuote = "'";
+    this.nonAttrQuote = '"';
+  }
+  this.attrQuoteEscaped = "\\" + this.attrQuote;
+  this.noEmptyPipe = (_ref2 = options.noemptypipe) != null ? _ref2 : false;
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.html2jade.html2jade.convert" id="apidoc.element.html2jade.html2jade.convert">
+        function <span class="apidocSignatureSpan">html2jade.html2jade.</span>convert
+        <span class="apidocSignatureSpan">(input, output, options)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">convert = function (input, output, options) {
+  if (options == null) {
+    options = {};
+  }
+  applyOptions(options);
+  if (options.parser == null) {
+    options.parser = new Parser(options);
+  }
+  return options.parser.parse(input, function(errors, window) {
+    if (errors != null ? errors.length : void 0) {
+      return errors;
+    } else {
+      if (output == null) {
+        output = new StreamOutput(process.stdout);
+      }
+      if (options.converter == null) {
+        options.converter = new Converter(options);
+      }
+      return options.converter.document(window.document, output);
+    }
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.html2jade.html2jade.convertDocument" id="apidoc.element.html2jade.html2jade.convertDocument">
+        function <span class="apidocSignatureSpan">html2jade.html2jade.</span>convertDocument
+        <span class="apidocSignatureSpan">(document, options, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">convertDocument = function (document, options, cb) {
+  var output, _ref;
+  if (options == null) {
+    options = {};
+  }
+  applyOptions(options);
+  output = (_ref = options.output) != null ? _ref : new StringOutput();
+  if (options.converter == null) {
+    options.converter = new Converter(options);
+  }
+  options.converter.document(document, output);
+  if (cb != null) {
+    return cb(null, output.final());
+  }
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+    html2jade.convertHtml(html, {}, function (err, jade) {
+      // do your thing
+    });
+
+To convert DOM document into Jade (client-side):
+
+    // assumes html2jade.js file has been loaded
+    Html2Jade.<span class="apidocCodeKeywordSpan">convertDocument</span>(document, {}, function (err, jade) {
+      // do your thing
+    });
+
+## Converting Mustache/Handlebars Templates
+
+Jade is commonly used to generate HTML with embedded Mustache or Handlebars templates.
+...</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.html2jade.html2jade.convertHtml" id="apidoc.element.html2jade.html2jade.convertHtml">
+        function <span class="apidocSignatureSpan">html2jade.html2jade.</span>convertHtml
+        <span class="apidocSignatureSpan">(html, options, cb)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">convertHtml = function (html, options, cb) {
+  if (options == null) {
+    options = {};
+  }
+  applyOptions(options);
+  if (options.parser == null) {
+    options.parser = new Parser(options);
+  }
+  return options.parser.parse(html, function(errors, window) {
+    var output, _ref;
+    if (errors != null ? errors.length : void 0) {
+      return errors;
+    } else {
+      output = (_ref = options.output) != null ? _ref : new StringOutput();
+      if (options.converter == null) {
+        options.converter = new Converter(options);
+      }
+      options.converter.document(window.document, output);
+      if (cb != null) {
+        return cb(null, output.final());
+      }
+    }
+  });
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">...
+
+## Programmatic Usage (&gt;= 0.0.7)
+
+To convert raw HTML into Jade:
+
+var html2jade = require('html2jade');
+var html = "&lt;html&gt;&lt;body&gt;Hello World&lt;/body&gt;&lt;/html&gt;";
+html2jade.<span class="apidocCodeKeywordSpan">convertHtml</span>(html, {}, function (err, jade) {
+  // do your thing
+});
+
+To convert DOM document into Jade (client-side):
+
+// assumes html2jade.js file has been loaded
+Html2Jade.convertDocument(document, {}, function (err, jade) {
+...</pre></li>
     </ul>
 
 
